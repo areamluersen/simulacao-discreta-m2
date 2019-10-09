@@ -1,5 +1,6 @@
 import React from 'react';
 import gerar_tempos_de_distribuicao from './numeros_randomicos';
+import './simulacao.css'
 
 function simulacao(){
   // Variáveis que devem ser lidas do usuário
@@ -62,6 +63,7 @@ function simulacao(){
           
 const SimulacaoComponent = () => {
   const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila} = simulacao();
+  
   return(
     <>
       <span>Atendimentos: {atendimentos}</span>
