@@ -1,41 +1,43 @@
 import React, { Component } from "react";
-import Chart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
-class Charp1 extends Component {
+
+class Charp1 extends React.Component {
+      
   constructor(props) {
     super(props);
+    console.log('asdofiansdfoi: ', props.temposAtendimento);
 
     this.state = {
       options: {
-        chart: {
-          id: "basic-bar"
+        dataLabels: {
+          enabled: false
         },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        stroke: {
+          curve: 'smooth'
+        },
+
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy HH:mm'
+          },
         }
       },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }
-      ]
-    };
+      series: [{
+        name: 'series1',
+        data: props.temposAtendimento
+      }, {
+        name: 'series2',
+        data: props.temposChegada
+      }],
+    }
   }
 
   render() {
     return (
-      <div className="app">
-        <div className="row">
-          <div className="mixed-chart">
-            <Chart
-              options={this.state.options}
-              series={this.state.series}
-              type="bar"
-              width="500"
-            />
-          </div>
-        </div>
+      
+      <div id="chart">
+        <ReactApexChart options={this.state.options} series={this.state.series} type="area" height="350" />
       </div>
     );
   }

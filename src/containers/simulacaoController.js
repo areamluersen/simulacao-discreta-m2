@@ -1,5 +1,6 @@
 import React from 'react';
 import gerar_tempos_de_distribuicao from './numeros_randomicos';
+import Chart1 from './chart1'
 import './simulacao.css'
 
 function simulacao(){
@@ -57,18 +58,21 @@ function simulacao(){
     }
   }
   console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
-  return {atendimentos_realizados_cont, unidadesQuePegaramFila};
+  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas};
 }
 
           
 const SimulacaoComponent = () => {
-  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila} = simulacao();
+  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas} = simulacao();
+  const temposChegada = tempo_atendimentos.map(data => data.intervalo)
+  const temposAtendimento = tempo_chegadas.map(data => data.intervalo)
   
   return(
     <>
       <span>Atendimentos: {atendimentos}</span>
       <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span>
       <span>////// Beco do Bátima \\\\\\</span>
+      {temposChegada.length > 0 && <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento}/>}
     </>
   )
 }
