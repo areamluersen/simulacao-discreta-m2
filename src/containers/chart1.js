@@ -34,6 +34,9 @@ class Charp1 extends React.Component {
       }, {
         name: 'Intervalo de chegada',
         data: props.temposChegada
+      }, {
+        name: 'Fila',
+        data: props.historicoFila
       }],
     }
   }

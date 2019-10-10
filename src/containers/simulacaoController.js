@@ -23,6 +23,8 @@ function simulacao(){
   let servidor_ficara_livre_no_min=0
   /* g */
   let clientes = []
+  let historico_fila = [];
+  
   // chaves cliente:
   // minuto_de_chegada, inicio_de_fila, tempo_na_fila, inicio_de_atendimento, tempo_de_atendimento
 
@@ -84,15 +86,16 @@ function simulacao(){
         unidadesQuePegaramFila += 1
         posicao_lista_chegada += 1
       }
+      historico_fila.push(fila.length)
     }
   }
   console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
-  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas};
+  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila};
 }
 
           
 const SimulacaoComponent = () => {
-  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas} = simulacao();
+  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila} = simulacao();
   const temposChegada = tempo_atendimentos.map(data => data.intervalo)
   const temposAtendimento = tempo_chegadas.map(data => data.intervalo)
   
@@ -101,7 +104,7 @@ const SimulacaoComponent = () => {
       <span>Atendimentos: {atendimentos}</span><br/>
       <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
       <div style={{maxWidth:1000}}>
-        <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento}/>
+        <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila}/>
 
       </div>
     </>
