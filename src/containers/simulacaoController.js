@@ -94,10 +94,12 @@ const SimulacaoComponent = () => {
   
   return(
     <>
-      <span>Atendimentos: {atendimentos}</span>
-      <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span>
-      <span>////// Beco do Bátima \\\\\\</span>
-      {temposChegada.length > 0 && <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento}/>}
+      <span>Atendimentos: {atendimentos}</span><br/>
+      <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
+      <div style={{maxWidth:1000}}>
+        <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento}/>
+
+      </div>
     </>
   )
 }

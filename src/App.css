@@ -29,32 +29,41 @@
 .grid-container {
   display: grid;
   grid-template-columns: 240px 1fr;
-  grid-template-rows: 50px 1fr 50px;
+  grid-template-rows: 50px 1fr;
   grid-template-areas:
     "sidenav header"
-    "sidenav main"
-    "sidenav footer";
+    "sidenav main";
   height: 100vh;
 }
 
 /* Give every child element its grid name */
 .header {
   grid-area: header;
-  background-color: #394263;
-  border-bottom: 2px solid #282c34 ;
+  background-color: #333842;
+  font-size: calc(12px + 2vmin);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidenav {
   grid-area: sidenav;
-  background-color: #394263;
+  background-color: #333842;
 }
 
 .main {
   grid-area: main;
-  background-color: #8fd4d9;
+  background-color: #6c778d;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {
   grid-area: footer;
-  background-color: #648ca6;
+  background-color: #282c34;
 }

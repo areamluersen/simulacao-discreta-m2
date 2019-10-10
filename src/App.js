@@ -7,12 +7,12 @@ function App() {
   return (
     <div className="grid-container">
       <header className="header">
+        <span>Simulação Discreta - Lavacar wash</span>
       </header>
       <aside className="sidenav">
 
       </aside>
       <main className="main">
-        <Button type="primary">antd Button</Button>
         <SimulacaoComponent/>
       </main>
     </div>

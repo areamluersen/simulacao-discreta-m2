@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
+import { black } from "ansi-colors";
 
 
 class Charp1 extends React.Component {
@@ -10,6 +11,10 @@ class Charp1 extends React.Component {
 
     this.state = {
       options: {
+        theme: {
+          mode: 'dark', 
+          palette: 'palette1'
+      },
         dataLabels: {
           enabled: false
         },
@@ -24,10 +29,10 @@ class Charp1 extends React.Component {
         }
       },
       series: [{
-        name: 'series1',
+        name: 'Tempo de atendimento',
         data: props.temposAtendimento
       }, {
-        name: 'series2',
+        name: 'Intervalo de chegada',
         data: props.temposChegada
       }],
     }
@@ -35,7 +40,6 @@ class Charp1 extends React.Component {
 
   render() {
     return (
-      
       <div id="chart">
         <ReactApexChart options={this.state.options} series={this.state.series} type="area" height="350" />
       </div>
