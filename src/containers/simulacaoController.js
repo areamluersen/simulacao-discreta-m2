@@ -21,10 +21,18 @@ function simulacao(){
   let fila = []
   let posicao_lista_chegada = 0
   let servidor_ficara_livre_no_min=0
+  /* g */
+  let clientes = []
+  // chaves cliente:
+  // minuto_de_chegada, inicio_de_fila, tempo_na_fila, inicio_de_atendimento, tempo_de_atendimento
+
   //variáveis discretas
 
   for (let i=0; i<tempo_simulacao_min; i++){
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
+      /* g */
+      clientes[posicao_lista_chegada].tempo_de_atendimento = i+1 - clientes[posicao_lista_chegada].inicio_de_atendimento
+
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
       console.log('\n---------------------------------------------- ')
@@ -32,13 +40,27 @@ function simulacao(){
     }
     
     if (!servidor_ocupado && fila.length > 0){
+      /* g */
+      clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
+      clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
+
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
       fila.pop(0)
     }
 
     if (tempo_chegadas[posicao_lista_chegada].minuto_tempo === i+1){
+      /* g */
+      let cliente = {
+        "minuto_de_chegada": i+1,
+      }
+      clientes.push(cliente)
+
       if (!servidor_ocupado){
+        /* g */
+        clientes[posicao_lista_chegada].inicio_de_fila = 0
+        clientes[posicao_lista_chegada].tempo_na_fila = 0
+        
         servidor_ocupado = true
         servidor_ficara_livre_no_min = tempo_atendimentos[posicao_lista_chegada].intervalo + i+1
         console.log('\n---------------------------------------------- ')
@@ -49,6 +71,9 @@ function simulacao(){
         posicao_lista_chegada += 1
       }
       else{
+        /* g */
+        clientes[posicao_lista_chegada].inicio_de_fila = 0
+
         console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
         fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
         tempo_chegadas[posicao_lista_chegada]['pegou_fila'] = true
