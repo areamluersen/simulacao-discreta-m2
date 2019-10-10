@@ -31,8 +31,10 @@ function simulacao(){
   for (let i=0; i<tempo_simulacao_min; i++){
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
       /* g */
-      clientes[posicao_lista_chegada].tempo_de_atendimento = i+1 - clientes[posicao_lista_chegada].inicio_de_atendimento
-
+      if(clientes[posicao_lista_chegada]){
+        clientes[posicao_lista_chegada].tempo_de_atendimento = i+1 - clientes[posicao_lista_chegada].inicio_de_atendimento
+      }
+        
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
       console.log('\n---------------------------------------------- ')
@@ -41,8 +43,10 @@ function simulacao(){
     
     if (!servidor_ocupado && fila.length > 0){
       /* g */
-      clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
-      clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
+      if(clientes[posicao_lista_chegada]){
+        clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
+        clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
+      }
 
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
