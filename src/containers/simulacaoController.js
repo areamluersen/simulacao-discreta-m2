@@ -23,16 +23,20 @@ function simulacao(){
   let servidor_ficara_livre_no_min=0
   /* g */
   let clientes = []
+  let historico_fila = [];
+  
   // chaves cliente:
   // minuto_de_chegada, inicio_de_fila, tempo_na_fila, inicio_de_atendimento, tempo_de_atendimento
 
   //variáveis discretas
-
+ // TODO work
   for (let i=0; i<tempo_simulacao_min; i++){
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
       /* g */
-      clientes[posicao_lista_chegada].tempo_de_atendimento = i+1 - clientes[posicao_lista_chegada].inicio_de_atendimento
-
+      if(clientes[posicao_lista_chegada]){
+        clientes[posicao_lista_chegada].tempo_de_atendimento = i+1 - clientes[posicao_lista_chegada].inicio_de_atendimento
+      }
+        
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
       console.log('\n---------------------------------------------- ')
@@ -41,8 +45,10 @@ function simulacao(){
     
     if (!servidor_ocupado && fila.length > 0){
       /* g */
-      clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
-      clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
+      if(clientes[posicao_lista_chegada]){
+        clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
+        clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
+      }
 
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
@@ -80,24 +86,27 @@ function simulacao(){
         unidadesQuePegaramFila += 1
         posicao_lista_chegada += 1
       }
+      historico_fila.push(fila.length)
     }
   }
   console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
-  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas};
+  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila};
 }
 
           
 const SimulacaoComponent = () => {
-  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas} = simulacao();
-  const temposChegada = tempo_atendimentos.map(data => data.intervalo)
-  const temposAtendimento = tempo_chegadas.map(data => data.intervalo)
+  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila} = simulacao();
+  const temposChegada = tempo_chegadas.map(data => data.intervalo)
+  const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
   
   return(
     <>
-      <span>Atendimentos: {atendimentos}</span>
-      <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span>
-      <span>////// Beco do Bátima \\\\\\</span>
-      {temposChegada.length > 0 && <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento}/>}
+      <span>Atendimentos: {atendimentos}</span><br/>
+      <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
+      <div style={{maxWidth:1000}}>
+        <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila}/>
+
+      </div>
     </>
   )
 }
