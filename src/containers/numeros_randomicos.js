@@ -1,6 +1,6 @@
 // Criar métodos de geração de números aleatórios como Uniforme, triangular, exponencial e natural.
 
-metodoJson = {
+const metodoJson = {
     1: "uniforme",
     2: "triangular",
     3: "exponencial",
@@ -13,7 +13,7 @@ metodoJson = {
  }
 // -- 
 function gerarRandomicoTriangular(valorMenor, valorMaior, moda){
-    let U = random.random()
+    let U = Math.random();
     if (U < (moda-valorMenor)/(valorMaior-valorMenor)){
         return valorMenor + (U*(moda-valorMenor)*(valorMaior-valorMenor)) ** 0.5
     }
@@ -24,41 +24,42 @@ function gerarRandomicoTriangular(valorMenor, valorMaior, moda){
 
 function gerarRandomicoExponencial(limiteInferior, media){
     // http://mpsantos.com.br/simul.pdf - Página 66 e 67
-    const U = random.random()
+    const U = Math.random();
     const alpha = 1 / (media - limiteInferior)
-    const x = limiteInferior - (1 / alpha) * math.log(U)
+    const x = limiteInferior - (1 / alpha) * Math.log(U)
     return x
 }
 
+//TODO - rever funcao ao ser chamada está quebrando a aplicação
 function gerarRandomicoNatural(media, variancia){
-    const U1 = random.random()
-    const U2 = random.random()
-    const Z = math.sqrt(-2 * math.log(U1)) * math.sin(2 * math.pi * U2)
+    const U1 = Math.random();
+    const U2 = Math.random();
+    const Z = Math.sqrt(-2 * Math.log(U1)) * Math.sin(2 * Math.pi * U2)
     const X = media + variancia * Z
     return X
 }
 
-function gerarNumerosRandomicos(metodo, qtde, valorMenor=None, valorMaior=None, moda=None, media=None, variancia=None){
+function gerarNumerosRandomicos(metodo, qtde, valorMenor, valorMaior, moda, media, variancia){
     const numerosAleatorios = []
-    if (metodoJson[`${metodo}`] == 'uniforme'){
-        for (_ in range(qtde)){
-            numerosAleatorios.append(gerarRandomicoUniforme(valorMenor, valorMaior))
+    if (metodoJson[metodo] === 'uniforme'){
+        for (let i = 0; i < qtde; i++){
+            numerosAleatorios.push(gerarRandomicoUniforme(valorMenor, valorMaior))
         }
     }
-    if (metodoJson[metodo] == 'triangular'){
-        for( _ in range(qtde)){
-            numerosAleatorios.append(gerarRandomicoTriangular(valorMenor, valorMaior, moda))
+    if (metodoJson[metodo] === 'triangular'){
+        for (let i = 0; i < qtde; i++){
+            numerosAleatorios.push(gerarRandomicoTriangular(valorMenor, valorMaior, moda))
         }
     }
-    if (metodoJson[metodo] == 'exponencial'){
-        for (_ in range(qtde)){
-            numerosAleatorios.append(
+    if (metodoJson[metodo] === 'exponencial'){
+        for (let i = 0; i < qtde; i++){
+            numerosAleatorios.push(
                 gerarRandomicoExponencial(valorMenor, media))
         }
     }
-    if (metodoJson[metodo] == 'natural'){
-        for( _ in range(qtde)){
-            numerosAleatorios.append(gerarRandomicoNatural(media, variancia))
+    if (metodoJson[metodo] === 'natural'){
+        for (let i = 0; i < qtde; i++){
+            numerosAleatorios.push(gerarRandomicoNatural(media, variancia))
         }
     }
     return numerosAleatorios
@@ -70,7 +71,10 @@ const gerar_tempos_de_distribuicao = (aleatorio=true, tempo_total_min=540, distr
     while(tempo_acumulado <= tempo_total_min){
 
         //Arrumar interação no Json.
-        const aleatorio = gerarRandomicoUniforme(0,100)
+        // const aleatorio = gerarRandomicoUniforme(0,100)
+        //TODO - Passar os parâmetros recebidos na função  gerarNumerosRandomicos() abaixos
+        const aleatorio = gerarNumerosRandomicos(3,1,0,100,20,10,6)[0]
+        console.log(aleatorio)
         for (let i=0; i< distribuicao.valor.length; i++){
 	        if (aleatorio < distribuicao.probabilidade_acumulada[i]){
                 tempo_acumulado += distribuicao.valor[i]

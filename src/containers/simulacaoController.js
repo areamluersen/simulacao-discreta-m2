@@ -96,8 +96,8 @@ function simulacao(){
           
 const SimulacaoComponent = () => {
   const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila} = simulacao();
-  const temposChegada = tempo_atendimentos.map(data => data.intervalo)
-  const temposAtendimento = tempo_chegadas.map(data => data.intervalo)
+  const temposChegada = tempo_chegadas.map(data => data.intervalo)
+  const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
   
   return(
     <>
