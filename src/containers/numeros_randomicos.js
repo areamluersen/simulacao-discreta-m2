@@ -30,11 +30,10 @@ function gerarRandomicoExponencial(limiteInferior, media){
     return x
 }
 
-//TODO - rever funcao ao ser chamada está quebrando a aplicação
 function gerarRandomicoNatural(media, variancia){
     const U1 = Math.random();
     const U2 = Math.random();
-    const Z = Math.sqrt(-2 * Math.log(U1)) * Math.sin(2 * Math.pi * U2)
+    const Z = Math.sqrt(-2 * Math.log(U1)) * Math.sin(2 * Math.PI * U2)
     const X = media + variancia * Z
     return X
 }
@@ -73,7 +72,7 @@ const gerar_tempos_de_distribuicao = (aleatorio=true, tempo_total_min=540, distr
         //Arrumar interação no Json.
         // const aleatorio = gerarRandomicoUniforme(0,100)
         //TODO - Passar os parâmetros recebidos na função  gerarNumerosRandomicos() abaixos
-        const aleatorio = gerarNumerosRandomicos(3,1,0,100,20,10,6)[0]
+        const aleatorio = gerarNumerosRandomicos(4,1,0,100,20,50,8)[0]
         console.log(aleatorio)
         for (let i=0; i< distribuicao.valor.length; i++){
 	        if (aleatorio < distribuicao.probabilidade_acumulada[i]){
