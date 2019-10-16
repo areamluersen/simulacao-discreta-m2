@@ -29,7 +29,7 @@ function simulacao(){
   // minuto_de_chegada, inicio_de_fila, tempo_na_fila, inicio_de_atendimento, tempo_de_atendimento
 
   //variáveis discretas
-
+ // TODO work
   for (let i=0; i<tempo_simulacao_min; i++){
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
       /* g */
