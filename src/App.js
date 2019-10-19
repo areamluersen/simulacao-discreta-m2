@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from 'antd/es/button';
 import SimulacaoComponent from './containers/simulacaoController'
+import {WrappedFormSider} from './containers/formSider'
 import './App.css';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
         <span>Simulação Discreta - Lavacar wash</span>
       </header>
       <aside className="sidenav">
-
+        <WrappedFormSider/>
       </aside>
       <main className="main">
         <SimulacaoComponent/>

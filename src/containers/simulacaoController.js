@@ -8,6 +8,7 @@ function simulacao(){
   const tempo_simulacao_min = 540 //Equivalente a 8 horas
   const distribuicao_chegadas = { 'probabilidade_acumulada' : [25,35,60,80,100], 'valor': [11,12,13,14,15] }
   const distribuicao_atendimentos = { 'probabilidade_acumulada' : [15,40,60,80,100], 'valor': [10,11,13,14,17] }
+  // TODO - Passar variáveis setados no front end
   const tempo_chegadas = gerar_tempos_de_distribuicao(true, tempo_simulacao_min, distribuicao_chegadas)
   const tempo_atendimentos = gerar_tempos_de_distribuicao(true, tempo_simulacao_min, distribuicao_atendimentos)
   console.log('asdasd 1; ', tempo_chegadas)
