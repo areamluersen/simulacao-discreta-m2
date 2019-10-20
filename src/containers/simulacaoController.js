@@ -25,7 +25,7 @@ function simulacao(){
   let historico_fila = [];
   /* g */
   let clientes = []
-  let posicao_lista_do_cliente_no_servidor
+  let cliente_no_servidor = null
 
   // chaves cliente:
   // minuto_de_chegada, inicio_de_fila, tempo_na_fila, inicio_de_atendimento, tempo_de_atendimento
@@ -38,7 +38,9 @@ function simulacao(){
     // servidor fica livre
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
       /* g */
-      clientes[posicao_lista_do_cliente_no_servidor].tempo_de_atendimento = i+1 - clientes[posicao_lista_do_cliente_no_servidor].inicio_de_atendimento
+      let cliente_que_saira_do_servidor = cliente_no_servidor
+
+      clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i+1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
 
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
@@ -49,11 +51,11 @@ function simulacao(){
     // alguem da fila vai para o servidor
     if (!servidor_ocupado && fila.length > 0){
       /* g */
-      if(clientes[posicao_lista_chegada]){
-        clientes[posicao_lista_chegada].tempo_na_fila = i+1 - clientes[posicao_lista_chegada].minuto_de_chegada
-        clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
-      }
-      posicao_lista_do_cliente_no_servidor = posicao_lista_chegada
+      let cliente_que_sera_atendido = fila[0].posicao_fila_chegada
+
+      clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].minuto_de_chegada
+      clientes[cliente_que_sera_atendido].inicio_de_atendimento = i+1
+      cliente_no_servidor = cliente_que_sera_atendido
 
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
@@ -70,8 +72,10 @@ function simulacao(){
       // cliente que chegou foi para o servidor
       if (!servidor_ocupado){
         /* g */
-        clientes[posicao_lista_chegada].inicio_de_atendimento = i+1
-        posicao_lista_do_cliente_no_servidor = posicao_lista_chegada
+        let cliente_que_sera_atendido = posicao_lista_chegada
+
+        clientes[cliente_que_sera_atendido].inicio_de_atendimento = i+1
+        cliente_no_servidor = cliente_que_sera_atendido
 
         servidor_ocupado = true
         servidor_ficara_livre_no_min = tempo_atendimentos[posicao_lista_chegada].intervalo + i+1
@@ -86,7 +90,9 @@ function simulacao(){
       // cliente que chegou foi para a fila
       else{
         /* g */
-        clientes[posicao_lista_chegada].inicio_de_fila = i+1
+        let cliente_que_ira_para_a_fila = posicao_lista_chegada
+
+        clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i+1
 
         console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
         fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
