@@ -40,7 +40,7 @@ function simulacao(){
       /* g */
       let cliente_que_saira_do_servidor = cliente_no_servidor
 
-      clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i+1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
+      clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
 
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
@@ -53,20 +53,20 @@ function simulacao(){
       /* g */
       let cliente_que_sera_atendido = fila[0].posicao_fila_chegada
 
-      clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].minuto_de_chegada
-      clientes[cliente_que_sera_atendido].inicio_de_atendimento = i+1
+      clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].inicio_de_fila
+      clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
       cliente_no_servidor = cliente_que_sera_atendido
 
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
-      fila.pop(0)
+      fila.shift()
     }
 
     // cliente chega
     if (tempo_chegadas[posicao_lista_chegada].minuto_tempo === i+1){
       /* g */
       let cliente = criarCliente()
-      cliente.minuto_de_chegada = i+1
+      cliente.minuto_de_chegada = i + 1
       clientes.push(cliente)
 
       // cliente que chegou foi para o servidor
@@ -74,7 +74,7 @@ function simulacao(){
         /* g */
         let cliente_que_sera_atendido = posicao_lista_chegada
 
-        clientes[cliente_que_sera_atendido].inicio_de_atendimento = i+1
+        clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
         cliente_no_servidor = cliente_que_sera_atendido
 
         servidor_ocupado = true
@@ -92,7 +92,7 @@ function simulacao(){
         /* g */
         let cliente_que_ira_para_a_fila = posicao_lista_chegada
 
-        clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i+1
+        clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
 
         console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
         fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
@@ -108,7 +108,7 @@ function simulacao(){
 }
 
 function criarCliente() {
-  return  {
+  return {
     "minuto_de_chegada": null,
     "inicio_de_fila": null,
     "tempo_na_fila": null,
