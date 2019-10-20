@@ -72,7 +72,7 @@ const gerar_tempos_de_distribuicao = (aleatorio=true, tempo_total_min=540, distr
         //Arrumar interação no Json.
         // const aleatorio = gerarRandomicoUniforme(0,100)
         //TODO - Passar os parâmetros recebidos na função  gerarNumerosRandomicos() abaixos
-        const aleatorio = gerarNumerosRandomicos(4,1,0,100,20,50,8)[0]
+        const aleatorio = gerarNumerosRandomicos(2,1,0,100,20,50,8)[0]
         console.log(aleatorio)
         for (let i=0; i< distribuicao.valor.length; i++){
 	        if (aleatorio < distribuicao.probabilidade_acumulada[i]){
