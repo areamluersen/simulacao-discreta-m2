@@ -93,6 +93,66 @@ class FormSider extends Component {
             />,
           )}
         </Form.Item>
+        <Form.Item label="Fila máxima: " style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('fila_maxima', {
+            initialValue:5,
+            rules: [{ required: true, message: 'Informe o Tamanho máximo da fila' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Minimo" style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('minimo', {
+            initialValue:0,
+            rules: [{ required: true, message: 'Informe o valor mínimo aleatório' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Máximo: " style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('maximo', {
+            initialValue:100,
+            rules: [{ required: true, message: 'Informe o valor máximo aleatório' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Média: " style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('media', {
+            initialValue:50,
+            rules: [{ required: true, message: 'Informe a media aleatoria' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Moda " style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('moda', {
+            initialValue:11,
+            rules: [{ required: true, message: 'Informe a moda aleatoria' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Variância " style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('variancia', {
+            initialValue:11,
+            rules: [{ required: true, message: 'Informe a variancia aleatoria' }],
+          })(
+            <Input
+              prefix={<Icon type="right-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />,
+          )}
+        </Form.Item>
         {/* TODO Adicionar min - máx - Moda - Média - Variância */}
         <Button type="primary" htmlType="submit" className="simular-form-button">
           Simular

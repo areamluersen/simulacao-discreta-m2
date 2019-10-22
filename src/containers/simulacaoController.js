@@ -6,18 +6,37 @@ import ChartColumns from './chartColumns';
 import './simulacao.css'
 
 function simulacao(props){
+  // Variáveis lidas do usuário
   const {values} = props;
-  // Variáveis que devem ser lidas do usuário
-  const tempo_simulacao_min = values.tempo_simulacao //Equivalente a 8 horas
-  const distribuicao_chegadas = { 'probabilidade_acumulada' : values.distribuicao_chegadas_percentual.split(','), 
-                                  'valor': values.distribuicao_chegadas_valor.split(',') }
-  const distribuicao_atendimentos = { 'probabilidade_acumulada' : values.distribuicao_atendimento_percentual.split(','), 
-                                      'valor': values.distribuicao_atendimento_valor.split(',') }                         
-  // TODO - Passar variáveis setados no front end - Faltou media moda e variancia
-  const tempo_chegadas = gerar_tempos_de_distribuicao(parseInt(values.tipo_distribuicao) ,true, tempo_simulacao_min, distribuicao_chegadas)
-  const tempo_atendimentos = gerar_tempos_de_distribuicao(parseInt(values.tipo_distribuicao), true, tempo_simulacao_min, distribuicao_atendimentos)
-  // console.log('asdasd 1; ', tempo_chegadas)
-  // Variáveis que devem ser lidas do usuário
+  let { 
+    minimo, 
+    maximo,  
+    media,  
+    moda,  
+    variancia,  
+    fila_maxima,  
+    tempo_simulacao,  
+    distribuicao_chegadas_percentual, 
+    distribuicao_chegadas_valor,
+    distribuicao_atendimento_percentual,
+    distribuicao_atendimento_valor,
+    tipo_distribuicao
+  } = values;
+  //necessário parseint pois input retorna string
+  minimo = parseInt(minimo) 
+  maximo = parseInt(maximo)  
+  media = parseInt(media)  
+  moda = parseInt(moda)  
+  variancia = parseInt(variancia)  
+  fila_maxima = parseInt(fila_maxima)  
+  tempo_simulacao = parseInt(tempo_simulacao)
+  // Variáveis lidas do usuário
+  const distribuicao_chegadas = { 'probabilidade_acumulada' : distribuicao_chegadas_percentual.split(','), 
+                                  'valor': distribuicao_chegadas_valor.split(',') }
+  const distribuicao_atendimentos = { 'probabilidade_acumulada' : distribuicao_atendimento_percentual.split(','), 
+                                      'valor': distribuicao_atendimento_valor.split(',') }                         
+  const tempo_chegadas = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao) ,true, tempo_simulacao, distribuicao_chegadas, minimo, maximo, media, moda, variancia)
+  const tempo_atendimentos = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao), true, tempo_simulacao, distribuicao_atendimentos, minimo, maximo, media, moda, variancia)
 
   //variáveis discretas
   let servidor_ocupado = false
@@ -38,7 +57,7 @@ function simulacao(props){
   //variáveis discretas
  // TODO work
   // relogio simulado
-  for (let i=0; i<tempo_simulacao_min; i++){
+  for (let i=0; i<tempo_simulacao; i++){
 
     // servidor fica livre
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
@@ -130,7 +149,8 @@ const SimulacaoComponent = (props) => {
       tempo_atendimentos, 
       tempo_chegadas, 
       historico_fila, 
-      clientes} = simulacao(props);
+      clientes    
+    } = simulacao(props);
     const temposChegada = tempo_chegadas.map(data => data.intervalo)
     const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
     return(
