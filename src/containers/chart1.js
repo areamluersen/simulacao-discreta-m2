@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-class Charp1 extends React.Component {
+class ChartArea extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.temposAtendimento !== prevProps.temposAtendimento) {
       this.setState(this.props)
@@ -13,7 +13,8 @@ class Charp1 extends React.Component {
     this.state={
       temposAtendimento: props.temposAtendimento,
       temposChegada: props.temposChegada,
-      historicoFila: props.historicoFila
+      historicoFila: props.historicoFila,
+      type: props.type
     }
   }
 
@@ -23,7 +24,7 @@ class Charp1 extends React.Component {
         theme: {
           mode: 'dark', 
           palette: 'palette1'
-      },
+        },
         dataLabels: {
           enabled: false
         },
@@ -50,10 +51,10 @@ class Charp1 extends React.Component {
     }
     return (
       <div id="chart">
-        <ReactApexChart options={graph.options} series={graph.series} type="area" height="350" />
+        <ReactApexChart options={graph.options} series={graph.series} type={this.state.type} height="350" />
       </div>
     );
   }
 }
 
-export default Charp1;
+export default ChartArea;

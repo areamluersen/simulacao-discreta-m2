@@ -1,7 +1,8 @@
 import React from 'react';
 import {Row, Col} from 'antd'
 import gerar_tempos_de_distribuicao from './numeros_randomicos';
-import Chart1 from './chart1'
+import ChartArea from './chart1';
+import ChartColumns from './chartColumns';
 import './simulacao.css'
 
 function simulacao(props){
@@ -141,11 +142,12 @@ const SimulacaoComponent = (props) => {
             <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
           </Col>
           <Col span={12}>
+            <ChartColumns temposChegada={clientes.length} temposAtendimento={atendimentos} historicoFila={unidadesQuePegaramFila} type="column"/>
           </Col>
         </Row>
         
-        <div style={{maxWidth:1000}}>
-          <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila}/>
+        <div>
+          <ChartArea temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila} type="area"/>
         </div>
       </div>
     )
