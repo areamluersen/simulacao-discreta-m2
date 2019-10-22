@@ -187,7 +187,7 @@ const SimulacaoComponent = (props) => {
       </div>
     )
   }
-  return  (<div style={{borderRadius: 13, backgroundColor:'#6c778d', width: '99%', heigth: '900px', boxShadow: '5px 5px 5px rgba(0,0,0,0.5)'}}>
+  return  (<div style={{borderRadius: 13, backgroundColor:'#6c778d', width: '99%', heigth: '900px', boxShadow: '5px 5px 5px rgba(0,0,0,0.5)', textAlign: 'center'}}>
     Preencha os Filtros do formulário e execute a simulação
     </div>)
 }
