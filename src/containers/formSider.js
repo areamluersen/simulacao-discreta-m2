@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Select } from 'antd';
+import { Form, Icon, Input, Button, Select } from 'antd';
 
 // import { Container } from './styles';
 const { Option } = Select;
@@ -9,7 +9,9 @@ class FormSider extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        const {setMasterState} = this.props;
         console.log('Received values of form: ', values);
+        setMasterState(values);
       }
     });
   };
@@ -81,7 +83,7 @@ class FormSider extends Component {
           )}
         </Form.Item>
         <Form.Item label="Tempo Simulação: " style={{marginBottom: 0}} {...formItemLayout}>
-          {getFieldDecorator('tempo_simulaca0', {
+          {getFieldDecorator('tempo_simulacao', {
             initialValue:540,
             rules: [{ required: true, message: 'Informe o Tempo de Simulação' }],
           })(

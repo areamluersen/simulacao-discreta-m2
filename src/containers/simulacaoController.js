@@ -1,17 +1,21 @@
 import React from 'react';
+import {Row, Col} from 'antd'
 import gerar_tempos_de_distribuicao from './numeros_randomicos';
 import Chart1 from './chart1'
 import './simulacao.css'
 
-function simulacao(){
+function simulacao(props){
+  const {values} = props;
   // Variáveis que devem ser lidas do usuário
-  const tempo_simulacao_min = 540 //Equivalente a 8 horas
-  const distribuicao_chegadas = { 'probabilidade_acumulada' : [25,35,60,80,100], 'valor': [11,12,13,14,15] }
-  const distribuicao_atendimentos = { 'probabilidade_acumulada' : [15,40,60,80,100], 'valor': [10,11,13,14,17] }
-  // TODO - Passar variáveis setados no front end
-  const tempo_chegadas = gerar_tempos_de_distribuicao(true, tempo_simulacao_min, distribuicao_chegadas)
-  const tempo_atendimentos = gerar_tempos_de_distribuicao(true, tempo_simulacao_min, distribuicao_atendimentos)
-  console.log('asdasd 1; ', tempo_chegadas)
+  const tempo_simulacao_min = values.tempo_simulacao //Equivalente a 8 horas
+  const distribuicao_chegadas = { 'probabilidade_acumulada' : values.distribuicao_chegadas_percentual.split(','), 
+                                  'valor': values.distribuicao_chegadas_valor.split(',') }
+  const distribuicao_atendimentos = { 'probabilidade_acumulada' : values.distribuicao_atendimento_percentual.split(','), 
+                                      'valor': values.distribuicao_atendimento_valor.split(',') }                         
+  // TODO - Passar variáveis setados no front end - Faltou media moda e variancia
+  const tempo_chegadas = gerar_tempos_de_distribuicao(parseInt(values.tipo_distribuicao) ,true, tempo_simulacao_min, distribuicao_chegadas)
+  const tempo_atendimentos = gerar_tempos_de_distribuicao(parseInt(values.tipo_distribuicao), true, tempo_simulacao_min, distribuicao_atendimentos)
+  // console.log('asdasd 1; ', tempo_chegadas)
   // Variáveis que devem ser lidas do usuário
 
   //variáveis discretas
@@ -44,8 +48,8 @@ function simulacao(){
 
       servidor_ocupado = false
       atendimentos_realizados_cont += 1
-      console.log('\n---------------------------------------------- ')
-      console.log('Servidor Ficou Livre no Min: ',i+1)
+      // console.log('\n---------------------------------------------- ')
+      // console.log('Servidor Ficou Livre no Min: ',i+1)
     }
 
     // alguem da fila vai para o servidor
@@ -79,11 +83,11 @@ function simulacao(){
 
         servidor_ocupado = true
         servidor_ficara_livre_no_min = tempo_atendimentos[posicao_lista_chegada].intervalo + i+1
-        console.log('\n---------------------------------------------- ')
-        console.log('Servidor Comecou atendimento no min: ', i+1)
-        console.log('Tempo previsto de atendimento: ', tempo_atendimentos[posicao_lista_chegada].intervalo)
-        console.log('Minuto previsto em que ficará livre: ',servidor_ficara_livre_no_min)
-        console.log('\n---------------------------------------------- ')
+        // console.log('\n---------------------------------------------- ')
+        // console.log('Servidor Comecou atendimento no min: ', i+1)
+        // console.log('Tempo previsto de atendimento: ', tempo_atendimentos[posicao_lista_chegada].intervalo)
+        // console.log('Minuto previsto em que ficará livre: ',servidor_ficara_livre_no_min)
+        // console.log('\n---------------------------------------------- ')
         posicao_lista_chegada += 1
       }
 
@@ -94,7 +98,7 @@ function simulacao(){
 
         clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
 
-        console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
+        // console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
         fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
         tempo_chegadas[posicao_lista_chegada]['pegou_fila'] = true
         unidadesQuePegaramFila += 1
@@ -103,8 +107,8 @@ function simulacao(){
       historico_fila.push(fila.length)
     }
   }
-  console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
-  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila};
+  // console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
+  return {atendimentos_realizados_cont, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila, clientes};
 }
 
 function criarCliente() {
@@ -117,21 +121,38 @@ function criarCliente() {
   }
 }
           
-const SimulacaoComponent = () => {
-  const {atendimentos_realizados_cont: atendimentos, unidadesQuePegaramFila, tempo_atendimentos, tempo_chegadas, historico_fila} = simulacao();
-  const temposChegada = tempo_chegadas.map(data => data.intervalo)
-  const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
-  
-  return(
-    <>
-      <span>Atendimentos: {atendimentos}</span><br/>
-      <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
-      <div style={{maxWidth:1000}}>
-        <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila}/>
-
+const SimulacaoComponent = (props) => {
+  console.log('sdoifgbaçuigabagbabdjrgbçargbçarg: ', props)
+  if (props.values.tempo_simulacao) {
+    const {atendimentos_realizados_cont: atendimentos, 
+      unidadesQuePegaramFila, 
+      tempo_atendimentos, 
+      tempo_chegadas, 
+      historico_fila, 
+      clientes} = simulacao(props);
+    const temposChegada = tempo_chegadas.map(data => data.intervalo)
+    const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
+    return(
+      <div style={{borderTopLeftRadius: 15, backgroundColor:'#6c778d'}}>
+        <Row>
+          <Col span={12}>
+            <span>Clientes total: {clientes.length}</span><br/>
+            <span>Clientes Atendidos: {atendimentos}</span><br/>
+            <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
+          </Col>
+          <Col span={12}>
+          </Col>
+        </Row>
+        
+        <div style={{maxWidth:1000}}>
+          <Chart1 temposChegada={temposChegada} temposAtendimento={temposAtendimento} historicoFila={historico_fila}/>
+        </div>
       </div>
-    </>
-  )
+    )
+  }
+  return  (<div style={{borderTopLeftRadius: 15, backgroundColor:'#6c778d'}}>
+    Preencha os Filtros do formulário e execute a simulação
+    </div>)
 }
 
 export default SimulacaoComponent;

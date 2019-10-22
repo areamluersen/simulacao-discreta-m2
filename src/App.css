@@ -56,7 +56,7 @@
 
 .main {
   grid-area: main;
-  background-color: #6c778d;
+  background-color: #333842;
   font-size: calc(10px + 2vmin);
   color: white;
   text-align: center;

@@ -1,15 +1,24 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
-import { black } from "ansi-colors";
-
 
 class Charp1 extends React.Component {
-      
+  componentDidUpdate(prevProps) {
+    if (this.props.temposAtendimento !== prevProps.temposAtendimento) {
+      this.setState(this.props)
+    }
+  }
   constructor(props) {
     super(props);
-    console.log('asdofiansdfoi: ', props.temposAtendimento);
 
-    this.state = {
+    this.state={
+      temposAtendimento: props.temposAtendimento,
+      temposChegada: props.temposChegada,
+      historicoFila: props.historicoFila
+    }
+  }
+
+  render() {
+    const graph = {
       options: {
         theme: {
           mode: 'dark', 
@@ -30,21 +39,18 @@ class Charp1 extends React.Component {
       },
       series: [{
         name: 'Tempo de atendimento',
-        data: props.temposAtendimento
+        data: this.state.temposAtendimento
       }, {
         name: 'Intervalo de chegada',
-        data: props.temposChegada
+        data: this.state.temposChegada
       }, {
         name: 'Fila',
-        data: props.historicoFila
+        data: this.state.historicoFila
       }],
     }
-  }
-
-  render() {
     return (
       <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="area" height="350" />
+        <ReactApexChart options={graph.options} series={graph.series} type="area" height="350" />
       </div>
     );
   }
