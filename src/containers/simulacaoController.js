@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col} from 'antd'
+import {Row, Col, List} from 'antd'
 import gerar_tempos_de_distribuicao from './numeros_randomicos';
 import ChartArea from './chart1';
 import ChartColumns from './chartColumns';
@@ -137,9 +137,24 @@ const SimulacaoComponent = (props) => {
       <div style={{borderRadius: 13, backgroundColor:'#6c778d', width: '99%', boxShadow: '5px 5px 5px rgba(0,0,0,0.5)'}}>
         <Row style={{maxHeigth: 200, maxWidth: '95%'}}>
           <Col span={12}>
-            <span>Clientes total: {clientes.length}</span><br/>
-            <span>Clientes Atendidos: {atendimentos}</span><br/>
-            <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
+          <List
+              size="small"
+              bordered
+              dataSource={[
+                {text: 'Clientes total:', value: clientes.length}, 
+                {text: 'Clientes Atendidos:', value: atendimentos}, 
+                {text: 'Número Médio de Entidades na Fila:', value: unidadesQuePegaramFila},
+                {text: 'Taxa Média de Ocupação do Servidor:', value: '--'},
+                {text: 'Tempo Médio de uma Entidade na Fila:', value: '--'},
+                {text: 'Tempo Médio no Sistema:', value: '--'},
+                {text: 'Número máximo de entidades simultâneas no sistema:', value: '--'}
+              ]}
+              renderItem={item => (
+                <List.Item>
+                  {`${item.text} ${item.value}`}
+                </List.Item>
+              )}
+            />
           </Col>
           <Col span={12}>
             <ChartColumns total_clientes={clientes.length} clientes_atendidos={atendimentos} pegaram_fila={unidadesQuePegaramFila} type="column"/>

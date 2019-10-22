@@ -60,7 +60,7 @@ class chartColumns extends React.Component {
         }
       return (
         <div id="chart">
-          <ReactApexChart options={graph.options} series={graph.series} type="bar" height='200'/>
+          <ReactApexChart options={graph.options} series={graph.series} type="bar" height='250'/>
         </div>
         );
     }
