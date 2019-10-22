@@ -134,15 +134,15 @@ const SimulacaoComponent = (props) => {
     const temposChegada = tempo_chegadas.map(data => data.intervalo)
     const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
     return(
-      <div style={{borderTopLeftRadius: 15, backgroundColor:'#6c778d'}}>
-        <Row>
+      <div style={{borderRadius: 13, backgroundColor:'#6c778d', width: '99%', boxShadow: '5px 5px 5px rgba(0,0,0,0.5)'}}>
+        <Row style={{maxHeigth: 200, maxWidth: '95%'}}>
           <Col span={12}>
             <span>Clientes total: {clientes.length}</span><br/>
             <span>Clientes Atendidos: {atendimentos}</span><br/>
             <span>Unidades que pegaram Fila: {unidadesQuePegaramFila}</span><br/>
           </Col>
           <Col span={12}>
-            <ChartColumns temposChegada={clientes.length} temposAtendimento={atendimentos} historicoFila={unidadesQuePegaramFila} type="column"/>
+            <ChartColumns total_clientes={clientes.length} clientes_atendidos={atendimentos} pegaram_fila={unidadesQuePegaramFila} type="column"/>
           </Col>
         </Row>
         
@@ -152,7 +152,7 @@ const SimulacaoComponent = (props) => {
       </div>
     )
   }
-  return  (<div style={{borderTopLeftRadius: 15, backgroundColor:'#6c778d'}}>
+  return  (<div style={{borderRadius: 13, backgroundColor:'#6c778d', width: '99%', heigth: '900px', boxShadow: '5px 5px 5px rgba(0,0,0,0.5)'}}>
     Preencha os Filtros do formulário e execute a simulação
     </div>)
 }

@@ -51,7 +51,7 @@ class ChartArea extends React.Component {
     }
     return (
       <div id="chart">
-        <ReactApexChart options={graph.options} series={graph.series} type={this.state.type} height="350" />
+        <ReactApexChart options={graph.options} series={graph.series} type={this.state.type} height="350" width='95%' />
       </div>
     );
   }

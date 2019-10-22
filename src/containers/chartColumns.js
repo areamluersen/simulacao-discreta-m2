@@ -5,7 +5,7 @@ var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', 
 
 class chartColumns extends React.Component {
     componentDidUpdate(prevProps) {
-        if (this.props.temposAtendimento !== prevProps.temposAtendimento) {
+        if (this.props.clientes_atendidos !== prevProps.clientes_atendidos) {
           this.setState(this.props)
         }
       }
@@ -13,9 +13,9 @@ class chartColumns extends React.Component {
         super(props);
     
         this.state={
-          temposAtendimento: props.temposAtendimento,
-          temposChegada: props.temposChegada,
-          historicoFila: props.historicoFila,
+          total_clientes: props.total_clientes,
+          clientes_atendidos: props.clientes_atendidos,
+          pegaram_fila: props.pegaram_fila,
           type: props.type
         }
       }
@@ -23,6 +23,10 @@ class chartColumns extends React.Component {
     render() {
         const graph = {
           options: {
+            theme: {
+              mode: 'dark', 
+              palette: 'palette1'
+            },
             chart: {
               events: {
                 click: function (chart, w, e) {
@@ -41,7 +45,7 @@ class chartColumns extends React.Component {
               enabled: false,
             },
             xaxis: {
-              categories: ['John', 'Joe', 'Jake', 'Amber', 'Peter', 'Mary', 'David', 'Lily'],
+              categories: ['Clientes Total', 'Atendidos', 'Pegaram Fila'],
               labels: {
                 style: {
                   colors: colors,
@@ -51,12 +55,12 @@ class chartColumns extends React.Component {
             }
           },
           series: [{
-            data: [21, 22, 10, 28, 16, 21, 13, 30]
+            data: [this.state.total_clientes, this.state.clientes_atendidos, this.state.pegaram_fila]
           }],
         }
       return (
         <div id="chart">
-          <ReactApexChart options={graph.options} series={graph.series} type="bar" height="350" />
+          <ReactApexChart options={graph.options} series={graph.series} type="bar" height='200'/>
         </div>
         );
     }
