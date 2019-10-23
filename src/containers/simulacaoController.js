@@ -47,7 +47,6 @@ function simulacao(props){
   let posicao_lista_chegada = 0
   let servidor_ficara_livre_no_min=0
   let historico_fila = [];
-  /* g */
   let clientes = []
   let cliente_no_servidor = null
 
@@ -61,7 +60,6 @@ function simulacao(props){
 
     // servidor fica livre
     if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
-      /* g */
       let cliente_que_saira_do_servidor = cliente_no_servidor
 
       clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
@@ -74,7 +72,6 @@ function simulacao(props){
 
     // alguem da fila vai para o servidor
     if (!servidor_ocupado && fila.length > 0){
-      /* g */
       let cliente_que_sera_atendido = fila[0].posicao_fila_chegada
 
       clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].inicio_de_fila
@@ -88,14 +85,12 @@ function simulacao(props){
 
     // cliente chega
     if (tempo_chegadas[posicao_lista_chegada].minuto_tempo === i+1){
-      /* g */
       let cliente = criarCliente()
       cliente.minuto_de_chegada = i + 1
       clientes.push(cliente)
 
       // cliente que chegou foi para o servidor
       if (!servidor_ocupado){
-        /* g */
         let cliente_que_sera_atendido = posicao_lista_chegada
 
         clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
@@ -113,7 +108,6 @@ function simulacao(props){
 
       // cliente que chegou foi para a fila
       else{
-        /* g */
         let cliente_que_ira_para_a_fila = posicao_lista_chegada
 
         clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
