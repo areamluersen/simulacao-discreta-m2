@@ -165,12 +165,12 @@ const SimulacaoComponent = (props) => {
                 {text: 'Clientes Atendidos:', value: atendimentos}, 
                 {text: 'Número Médio de Entidades na Fila:', value: unidadesQuePegaramFila},
                 {text: 'Taxa Média de Ocupação do Servidor:', value: '--'},
-                {text: 'Tempo Médio de uma Entidade na Fila:', value: '--'},
+                {text: 'Tempo Médio na Fila:', value: '--'},
                 {text: 'Tempo Médio no Sistema:', value: '--'},
-                {text: 'Número máximo de entidades simultâneas no sistema:', value: '--'}
+                {text: 'Pico de entidades no sistema:', value: '--'}
               ]}
               renderItem={item => (
-                <List.Item>
+                <List.Item style={{color: 'rgba(0,0,0,0.8)', fontWeight: "bold"}}>
                   {`${item.text} ${item.value}`}
                 </List.Item>
               )}
