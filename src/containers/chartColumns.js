@@ -5,8 +5,8 @@ var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', 
 
 class chartColumns extends React.Component {
     componentDidUpdate(prevProps) {
-        if (this.props.clientes_atendidos !== prevProps.clientes_atendidos) {
-          this.setState(this.props)
+        if (this.props.dataSource !== prevProps.dataSource) {
+          this.setState({data: this.props.dataSource})
         }
       }
       constructor(props) {
@@ -42,7 +42,7 @@ class chartColumns extends React.Component {
               enabled: false,
             },
             xaxis: {
-              categories: ['Clientes Total', 'Atendidos', 'Pegaram Fila', 'Pico de clientes'],
+              categories: ['Clientes Total', 'Atendidos', 'Pegaram Fila', 'Pico', 'Descartados'],
               labels: {
                 style: {
                   colors: colors,

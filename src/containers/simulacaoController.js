@@ -42,8 +42,8 @@ function simulacao(props){
   let servidor_ocupado = false
   let atendimentos_realizados_cont = 0
   let unidadesQuePegaramFila = 0
-  let atendimentos_realizados_inf = []
   let fila = []
+  let clientes_descartados = 0
   let posicao_lista_chegada = 0
   let servidor_ficara_livre_no_min=0
   let historico_fila = [];
@@ -62,87 +62,91 @@ function simulacao(props){
  // TODO work
   // relogio simulado
   for (let i=0; i<tempo_simulacao; i++){
-
-    // servidor fica livre
-    if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
-      let cliente_que_saira_do_servidor = cliente_no_servidor
-
-      clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
-      clientes[cliente_que_saira_do_servidor].minuto_de_saida = i + 1
-      clientes_atendidos.push(clientes[cliente_que_saira_do_servidor])
-      taxa_media_de_ocupacao_do_servidor_dividendo += i - 1 - tempo_simulado_na_ocupacao
-      numero_de_entidades -= 1
-
-      servidor_ocupado = false
-      atendimentos_realizados_cont += 1
-      // console.log('\n---------------------------------------------- ')
-      // console.log('Servidor Ficou Livre no Min: ',i+1)
-    }
-
-    // alguem da fila vai para o servidor
-    if (!servidor_ocupado && fila.length > 0){
-      let cliente_que_sera_atendido = fila[0].posicao_fila_chegada
-
-      clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].inicio_de_fila
-      clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
-      cliente_no_servidor = cliente_que_sera_atendido
-      tempo_simulado_na_ocupacao = i + 1
-
-      let tempo_de_estado_da_fila = i + 1 - tempo_simulado_na_alteracao_da_fila
-      numero_medio_de_entidades_na_fila_dividendo += fila.length * tempo_de_estado_da_fila
-      numero_medio_de_entidades_na_fila_divisor += tempo_de_estado_da_fila
-      tempo_simulado_na_alteracao_da_fila = i + 1
-
-      servidor_ocupado = true
-      servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
-      fila.shift()
-    }
-
-    // cliente chega
-    if (tempo_chegadas[posicao_lista_chegada].minuto_tempo === i+1){
-      let cliente = criarCliente()
-      cliente.minuto_de_chegada = i + 1
-      clientes.push(cliente)
-      numero_de_entidades += 1
-      numero_maximo_de_entidades_simultaneas_no_sistema = Math.max(numero_de_entidades, numero_maximo_de_entidades_simultaneas_no_sistema)
-
-      // cliente que chegou foi para o servidor
-      if (!servidor_ocupado){
-        let cliente_que_sera_atendido = posicao_lista_chegada
-
+    if(tempo_atendimentos.length > posicao_lista_chegada){
+      // servidor fica livre
+      if (servidor_ocupado && servidor_ficara_livre_no_min === i+1){
+        let cliente_que_saira_do_servidor = cliente_no_servidor
+  
+        clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
+        clientes[cliente_que_saira_do_servidor].minuto_de_saida = i + 1
+        clientes_atendidos.push(clientes[cliente_que_saira_do_servidor])
+        taxa_media_de_ocupacao_do_servidor_dividendo += i - 1 - tempo_simulado_na_ocupacao
+        numero_de_entidades -= 1
+  
+        servidor_ocupado = false
+        atendimentos_realizados_cont += 1
+        // console.log('\n---------------------------------------------- ')
+        // console.log('Servidor Ficou Livre no Min: ',i+1)
+      }
+  
+      // alguem da fila vai para o servidor
+      if (!servidor_ocupado && fila.length > 0){
+        let cliente_que_sera_atendido = fila[0].posicao_fila_chegada
+  
+        clientes[cliente_que_sera_atendido].tempo_na_fila = i + 1 - clientes[cliente_que_sera_atendido].inicio_de_fila
         clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
         cliente_no_servidor = cliente_que_sera_atendido
         tempo_simulado_na_ocupacao = i + 1
-
-        servidor_ocupado = true
-        servidor_ficara_livre_no_min = tempo_atendimentos[posicao_lista_chegada].intervalo + i+1
-        // console.log('\n---------------------------------------------- ')
-        // console.log('Servidor Comecou atendimento no min: ', i+1)
-        // console.log('Tempo previsto de atendimento: ', tempo_atendimentos[posicao_lista_chegada].intervalo)
-        // console.log('Minuto previsto em que ficará livre: ',servidor_ficara_livre_no_min)
-        // console.log('\n---------------------------------------------- ')
-        posicao_lista_chegada += 1
-      }
-
-      // cliente que chegou foi para a fila
-      else{
-        let cliente_que_ira_para_a_fila = posicao_lista_chegada
-
-        clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
-
+  
         let tempo_de_estado_da_fila = i + 1 - tempo_simulado_na_alteracao_da_fila
         numero_medio_de_entidades_na_fila_dividendo += fila.length * tempo_de_estado_da_fila
         numero_medio_de_entidades_na_fila_divisor += tempo_de_estado_da_fila
         tempo_simulado_na_alteracao_da_fila = i + 1
-
-        // console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
-        fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
-        tempo_chegadas[posicao_lista_chegada]['pegou_fila'] = true
-        unidadesQuePegaramFila += 1
+  
+        servidor_ocupado = true
+        console.log('fila[0].posicao_fila_chegada: ', fila[0].posicao_fila_chegada);
+        servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
+        fila.shift()
+      }
+  
+      // cliente chega
+      if (tempo_chegadas[posicao_lista_chegada].minuto_tempo === i+1){
+        let cliente = criarCliente()
+        cliente.minuto_de_chegada = i + 1
+        clientes.push(cliente)
+        numero_de_entidades += 1
+        numero_maximo_de_entidades_simultaneas_no_sistema = Math.max(numero_de_entidades, numero_maximo_de_entidades_simultaneas_no_sistema)
+        
+        if(fila.length < fila_maxima){
+          // cliente que chegou foi para o servidor
+          if (!servidor_ocupado){
+            let cliente_que_sera_atendido = posicao_lista_chegada
+    
+            clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
+            cliente_no_servidor = cliente_que_sera_atendido
+            tempo_simulado_na_ocupacao = i + 1
+    
+            servidor_ocupado = true
+            servidor_ficara_livre_no_min = tempo_atendimentos[posicao_lista_chegada].intervalo + i+1
+          }
+    
+          // cliente que chegou foi para a fila
+          else{
+            let cliente_que_ira_para_a_fila = posicao_lista_chegada
+    
+            clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
+    
+            let tempo_de_estado_da_fila = i + 1 - tempo_simulado_na_alteracao_da_fila
+            numero_medio_de_entidades_na_fila_dividendo += fila.length * tempo_de_estado_da_fila
+            numero_medio_de_entidades_na_fila_divisor += tempo_de_estado_da_fila
+            tempo_simulado_na_alteracao_da_fila = i + 1
+    
+            // console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
+            fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
+            tempo_chegadas[posicao_lista_chegada]['pegou_fila'] = true
+            unidadesQuePegaramFila += 1
+          }
+          
+        }else{
+          console.log('cliente descartado: ', clientes_descartados)
+          clientes_descartados = clientes_descartados +1;
+        }
+        historico_fila.push(fila.length)
         posicao_lista_chegada += 1
       }
-      historico_fila.push(fila.length)
+     
     }
+
   }
   // console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
   let numero_medio_de_entidades_na_fila = numeroMedioDeEntidadesNaFila(numero_medio_de_entidades_na_fila_dividendo, numero_medio_de_entidades_na_fila_divisor)
@@ -162,6 +166,7 @@ function simulacao(props){
     tempo_medio_de_uma_entidade_na_fila,
     tempo_medio_no_sistema,
     numero_maximo_de_entidades_simultaneas_no_sistema,
+    clientes_descartados
   };
 }
 
@@ -226,6 +231,7 @@ const SimulacaoComponent = (props) => {
       tempo_medio_de_uma_entidade_na_fila,
       tempo_medio_no_sistema,
       numero_maximo_de_entidades_simultaneas_no_sistema,
+      clientes_descartados
     } = simulacao(props);
     const temposChegada = tempo_chegadas.map(data => data.intervalo)
     const temposAtendimento = tempo_atendimentos.map(data => data.intervalo)
@@ -244,7 +250,8 @@ const SimulacaoComponent = (props) => {
                 {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor * 100},
                 {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila},
                 {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema},
-                {text: 'Pico de entidades no sistema:', value: numero_maximo_de_entidades_simultaneas_no_sistema}
+                {text: 'Pico de entidades no sistema:', value: numero_maximo_de_entidades_simultaneas_no_sistema},
+                {text: 'Clientes Descartados:', value: clientes_descartados}
               ]}
               renderItem={item => (
                 <List.Item style={{color: 'rgba(0,0,0,0.8)', fontWeight: "bold"}}>
@@ -259,6 +266,7 @@ const SimulacaoComponent = (props) => {
               atendimentos, 
               unidadesQuePegaramFila, 
               numero_maximo_de_entidades_simultaneas_no_sistema,
+              clientes_descartados
             ]} type="column"/>
           </Col>
         </Row>
