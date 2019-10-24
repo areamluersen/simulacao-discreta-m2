@@ -1,18 +1,18 @@
 # Aream e Gustavo
 
-# Requirements
+# Requisitos
 
 ### node.js e yarn
 
-# Installing project dependencies
+# Instalando as dependências do projeto
 
-In the project directory, you can run:
+Na pasta raiz do projeto, rodar:
 
 ### yarn
 
-# Running
+# Rodando
 
-In the project directory, you can run:
+Na pasta raiz do projeto, rodar:
 
 ### yarn start
 
@@ -20,4 +20,4 @@ In the project directory, you can run:
 
 No menu da esquerda são listados os possíveis valores de parâmetros.
 Depois de alterados, clicar no botão de "Simular".
-No centro da página, será renderizado, a saída da simulação, sendo que o gráfico principal decorre em função das entidades, e não do tempo.
+No centro da página, será renderizado a saída da simulação, sendo que o gráfico principal decorre em função das entidades, e não do tempo.
