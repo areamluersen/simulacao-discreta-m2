@@ -70,7 +70,7 @@ function simulacao(props){
         clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
         clientes[cliente_que_saira_do_servidor].minuto_de_saida = i + 1
         clientes_atendidos.push(clientes[cliente_que_saira_do_servidor])
-        taxa_media_de_ocupacao_do_servidor_dividendo += i - 1 - tempo_simulado_na_ocupacao
+        taxa_media_de_ocupacao_do_servidor_dividendo += i + 1 - tempo_simulado_na_ocupacao
         numero_de_entidades -= 1
   
         servidor_ocupado = false
@@ -149,7 +149,7 @@ function simulacao(props){
 
   }
   // console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
-  let numero_medio_de_entidades_na_fila = numeroMedioDeEntidadesNaFila(numero_medio_de_entidades_na_fila_dividendo, numero_medio_de_entidades_na_fila_divisor)
+  let numero_medio_de_entidades_na_fila = numeroMedioDeEntidadesNaFila(numero_medio_de_entidades_na_fila_dividendo, numero_medio_de_entidades_na_fila_divisor) || 0
   let taxa_media_de_ocupacao_do_servidor = taxaMediaDeOcupacaoDoServidor(taxa_media_de_ocupacao_do_servidor_dividendo, tempo_simulacao)
   let tempo_medio_de_uma_entidade_na_fila = tempoMedioDeUmaEntidadeNaFila(clientes)
   let tempo_medio_no_sistema = tempoMedioNoSistema(clientes_atendidos)
