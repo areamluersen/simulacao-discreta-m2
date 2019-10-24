@@ -70,7 +70,7 @@ function simulacao(props){
       clientes[cliente_que_saira_do_servidor].tempo_de_atendimento = i + 1 - clientes[cliente_que_saira_do_servidor].inicio_de_atendimento
       clientes[cliente_que_saira_do_servidor].minuto_de_saida = i + 1
       clientes_atendidos.push(clientes[cliente_que_saira_do_servidor])
-      taxa_media_de_ocupacao_do_servidor_dividendo += i - 1 - tempo_simulado_na_ocupacao
+      taxa_media_de_ocupacao_do_servidor_dividendo += i + 1 - tempo_simulado_na_ocupacao
       numero_de_entidades -= 1
 
       servidor_ocupado = false
