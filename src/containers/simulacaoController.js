@@ -54,6 +54,9 @@ function simulacao(props){
   let taxa_media_de_ocupacao_do_servidor_dividendo = 0
   let numero_de_entidades = 0
   let numero_maximo_de_entidades_simultaneas_no_sistema = 0
+  let numero_medio_de_entidades_na_fila_dividendo = 0
+  let tempo_simulado_na_alteracao_da_fila = 0
+  let numero_medio_de_entidades_na_fila_divisor = 0
 
   //variáveis discretas
  // TODO work
@@ -84,6 +87,11 @@ function simulacao(props){
       clientes[cliente_que_sera_atendido].inicio_de_atendimento = i + 1
       cliente_no_servidor = cliente_que_sera_atendido
       tempo_simulado_na_ocupacao = i + 1
+
+      let tempo_de_estado_da_fila = i + 1 - tempo_simulado_na_alteracao_da_fila
+      numero_medio_de_entidades_na_fila_dividendo += fila.length * tempo_de_estado_da_fila
+      numero_medio_de_entidades_na_fila_divisor += tempo_de_estado_da_fila
+      tempo_simulado_na_alteracao_da_fila = i + 1
 
       servidor_ocupado = true
       servidor_ficara_livre_no_min = tempo_atendimentos[fila[0].posicao_fila_chegada].intervalo + i+1
@@ -122,6 +130,11 @@ function simulacao(props){
 
         clientes[cliente_que_ira_para_a_fila].inicio_de_fila = i + 1
 
+        let tempo_de_estado_da_fila = i + 1 - tempo_simulado_na_alteracao_da_fila
+        numero_medio_de_entidades_na_fila_dividendo += fila.length * tempo_de_estado_da_fila
+        numero_medio_de_entidades_na_fila_divisor += tempo_de_estado_da_fila
+        tempo_simulado_na_alteracao_da_fila = i + 1
+
         // console.log('Entidade, "', posicao_lista_chegada,'" Pegou Fila: ')
         fila.push({'minuto_chegada': i, 'posicao_fila_chegada': posicao_lista_chegada })
         tempo_chegadas[posicao_lista_chegada]['pegou_fila'] = true
@@ -132,6 +145,7 @@ function simulacao(props){
     }
   }
   // console.log('atendimentos_realizados_cont: ', atendimentos_realizados_cont)
+  let numero_medio_de_entidades_na_fila = numeroMedioDeEntidadesNaFila(numero_medio_de_entidades_na_fila_dividendo, numero_medio_de_entidades_na_fila_divisor)
   let taxa_media_de_ocupacao_do_servidor = taxaMediaDeOcupacaoDoServidor(taxa_media_de_ocupacao_do_servidor_dividendo, tempo_simulacao)
   let tempo_medio_de_uma_entidade_na_fila = tempoMedioDeUmaEntidadeNaFila(clientes)
   let tempo_medio_no_sistema = tempoMedioNoSistema(clientes_atendidos)
@@ -143,11 +157,16 @@ function simulacao(props){
     tempo_chegadas,
     historico_fila,
     clientes,
+    numero_medio_de_entidades_na_fila,
     taxa_media_de_ocupacao_do_servidor,
     tempo_medio_de_uma_entidade_na_fila,
     tempo_medio_no_sistema,
     numero_maximo_de_entidades_simultaneas_no_sistema,
   };
+}
+
+function numeroMedioDeEntidadesNaFila(numero_medio_de_entidades_na_fila_dividendo, numero_medio_de_entidades_na_fila_divisor) {
+  return numero_medio_de_entidades_na_fila_dividendo / numero_medio_de_entidades_na_fila_divisor
 }
 
 function taxaMediaDeOcupacaoDoServidor(taxa_media_de_ocupacao_do_servidor_dividendo, tempo_simulacao) {
@@ -202,6 +221,7 @@ const SimulacaoComponent = (props) => {
       tempo_chegadas, 
       historico_fila, 
       clientes,
+      numero_medio_de_entidades_na_fila,
       taxa_media_de_ocupacao_do_servidor,
       tempo_medio_de_uma_entidade_na_fila,
       tempo_medio_no_sistema,
@@ -220,7 +240,7 @@ const SimulacaoComponent = (props) => {
                 {text: 'Clientes total:', value: clientes.length}, 
                 {text: 'Clientes Atendidos:', value: atendimentos}, 
                 {text: 'Clientes que Pegaram Fila:', value: unidadesQuePegaramFila},
-                {text: 'Número Médio de Entidades na Fila:', value: '--'},
+                {text: 'Número Médio de Entidades na Fila:', value: numero_medio_de_entidades_na_fila},
                 {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor * 100},
                 {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila},
                 {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema},
