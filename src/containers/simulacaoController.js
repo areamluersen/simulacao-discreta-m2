@@ -246,16 +246,16 @@ const SimulacaoComponent = (props) => {
                 {text: 'Clientes total:', value: clientes.length}, 
                 {text: 'Clientes Atendidos:', value: atendimentos}, 
                 {text: 'Clientes que Pegaram Fila:', value: unidadesQuePegaramFila},
-                {text: 'Número Médio de Entidades na Fila:', value: numero_medio_de_entidades_na_fila},
-                {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor * 100},
-                {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila},
-                {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema},
+                {text: 'Número Médio de Entidades na Fila:', value: numero_medio_de_entidades_na_fila.toPrecision(4)},
+                {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor.toPrecision(4) * 100},
+                {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila.toPrecision(4)},
+                {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema.toPrecision(4)},
                 {text: 'Pico de entidades no sistema:', value: numero_maximo_de_entidades_simultaneas_no_sistema},
                 {text: 'Clientes Descartados:', value: clientes_descartados}
               ]}
               renderItem={item => (
                 <List.Item style={{color: 'rgba(0,0,0,0.8)', fontWeight: "bold"}}>
-                  {`${item.text} ${item.value}`}
+                  {`${item.text}`} <span style={{color: '#FEB019', fontWeight: "bold"}}>{item.value}</span>
                 </List.Item>
               )}
             />
