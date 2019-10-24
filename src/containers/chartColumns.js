@@ -13,10 +13,7 @@ class chartColumns extends React.Component {
         super(props);
     
         this.state={
-          total_clientes: props.total_clientes,
-          clientes_atendidos: props.clientes_atendidos,
-          pegaram_fila: props.pegaram_fila,
-          type: props.type
+          data: props.dataSource
         }
       }
     
@@ -45,7 +42,7 @@ class chartColumns extends React.Component {
               enabled: false,
             },
             xaxis: {
-              categories: ['Clientes Total', 'Atendidos', 'Pegaram Fila'],
+              categories: ['Clientes Total', 'Atendidos', 'Pegaram Fila', 'Pico de clientes'],
               labels: {
                 style: {
                   colors: colors,
@@ -55,7 +52,7 @@ class chartColumns extends React.Component {
             }
           },
           series: [{
-            data: [this.state.total_clientes, this.state.clientes_atendidos, this.state.pegaram_fila]
+            data: this.state.data
           }],
         }
       return (

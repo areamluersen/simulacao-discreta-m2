@@ -221,7 +221,7 @@ const SimulacaoComponent = (props) => {
                 {text: 'Clientes Atendidos:', value: atendimentos}, 
                 {text: 'Clientes que Pegaram Fila:', value: unidadesQuePegaramFila},
                 {text: 'Número Médio de Entidades na Fila:', value: '--'},
-                {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor},
+                {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor * 100},
                 {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila},
                 {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema},
                 {text: 'Pico de entidades no sistema:', value: numero_maximo_de_entidades_simultaneas_no_sistema}
@@ -234,7 +234,12 @@ const SimulacaoComponent = (props) => {
             />
           </Col>
           <Col span={12}>
-            <ChartColumns total_clientes={clientes.length} clientes_atendidos={atendimentos} pegaram_fila={unidadesQuePegaramFila} type="column"/>
+            <ChartColumns dataSource={[
+              clientes.length, 
+              atendimentos, 
+              unidadesQuePegaramFila, 
+              numero_maximo_de_entidades_simultaneas_no_sistema,
+            ]} type="column"/>
           </Col>
         </Row>
         
