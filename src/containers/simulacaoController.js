@@ -219,7 +219,8 @@ const SimulacaoComponent = (props) => {
               dataSource={[
                 {text: 'Clientes total:', value: clientes.length}, 
                 {text: 'Clientes Atendidos:', value: atendimentos}, 
-                {text: 'Número Médio de Entidades na Fila:', value: unidadesQuePegaramFila},
+                {text: 'Clientes que Pegaram Fila:', value: unidadesQuePegaramFila},
+                {text: 'Número Médio de Entidades na Fila:', value: '--'},
                 {text: 'Taxa Média de Ocupação do Servidor:', value: taxa_media_de_ocupacao_do_servidor},
                 {text: 'Tempo Médio na Fila:', value: tempo_medio_de_uma_entidade_na_fila},
                 {text: 'Tempo Médio no Sistema:', value: tempo_medio_no_sistema},
