@@ -20,7 +20,8 @@ function simulacao(props){
     distribuicao_chegadas_valor,
     distribuicao_atendimento_percentual,
     distribuicao_atendimento_valor,
-    tipo_distribuicao
+    tipo_distribuicao,
+    tempos_aleatorios,
   } = values;
   //necessário parseint pois input retorna string
   minimo = parseInt(minimo) 
@@ -35,8 +36,8 @@ function simulacao(props){
                                   'valor': distribuicao_chegadas_valor.split(',') }
   const distribuicao_atendimentos = { 'probabilidade_acumulada' : distribuicao_atendimento_percentual.split(','), 
                                       'valor': distribuicao_atendimento_valor.split(',') }                         
-  const tempo_chegadas = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao) ,true, tempo_simulacao, distribuicao_chegadas, minimo, maximo, media, moda, variancia)
-  const tempo_atendimentos = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao), true, tempo_simulacao, distribuicao_atendimentos, minimo, maximo, media, moda, variancia)
+  const tempo_chegadas = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao) ,tempos_aleatorios, tempo_simulacao, distribuicao_chegadas, minimo, maximo, media, moda, variancia)
+  const tempo_atendimentos = gerar_tempos_de_distribuicao(parseInt(tipo_distribuicao), tempos_aleatorios, tempo_simulacao, distribuicao_atendimentos, minimo, maximo, media, moda, variancia)
 
   //variáveis discretas
   let servidor_ocupado = false

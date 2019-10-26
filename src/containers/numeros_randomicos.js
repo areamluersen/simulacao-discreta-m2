@@ -64,7 +64,7 @@ function gerarNumerosRandomicos(metodo, qtde, valorMenor, valorMaior, moda, medi
     return numerosAleatorios
 }
 
-const gerar_tempos_de_distribuicao = (tipo_distribuicao = 1, aleatorio=true, tempo_total_min=540, distribuicao={}, minimo, maximo, media, moda, variancia) => {
+const gerar_tempos_de_distribuicao = (tipo_distribuicao = 1, sem_distribuicao=true, tempo_total_min=540, distribuicao={}, minimo, maximo, media, moda, variancia) => {
     let tempo_acumulado = 0
     const chegadas=[]
     while(tempo_acumulado <= tempo_total_min){
@@ -72,12 +72,18 @@ const gerar_tempos_de_distribuicao = (tipo_distribuicao = 1, aleatorio=true, tem
         //Arrumar interação no Json.
         // const aleatorio = gerarRandomicoUniforme(0,100)
         //TODO - Passar os parâmetros recebidos na função  gerarNumerosRandomicos() abaixos
+        console.log('sem_distribuicao: ', sem_distribuicao)
         const aleatorio = gerarNumerosRandomicos(tipo_distribuicao,1,minimo,maximo,moda,media,variancia)[0]
-        for (let i=0; i< distribuicao.valor.length; i++){
-	        if (aleatorio < parseInt(distribuicao.probabilidade_acumulada[i])){
-                tempo_acumulado += parseInt(distribuicao.valor[i])
-                chegadas.push({'minuto_tempo': tempo_acumulado, 'intervalo': parseInt(distribuicao.valor[i])})
-                break
+        if(sem_distribuicao){
+            tempo_acumulado += parseInt(aleatorio);
+            chegadas.push({'minuto_tempo': tempo_acumulado, 'intervalo': parseInt(aleatorio)})
+        }else{
+            for (let i=0; i< distribuicao.valor.length; i++){
+                if (aleatorio < parseInt(distribuicao.probabilidade_acumulada[i])){
+                    tempo_acumulado += parseInt(distribuicao.valor[i])
+                    chegadas.push({'minuto_tempo': tempo_acumulado, 'intervalo': parseInt(distribuicao.valor[i])})
+                    break
+                }
             }
         }
 

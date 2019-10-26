@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Select } from 'antd';
+import { Form, Icon, Input, Button, Select, Checkbox } from 'antd';
 
 // import { Container } from './styles';
 const { Option } = Select;
@@ -80,6 +80,12 @@ class FormSider extends Component {
               prefix={<Icon type="logout" style={{ color: 'rgba(0,0,0,.25)' }} />}
               suffix="%"
             />,
+          )}
+        </Form.Item>
+        <Form.Item label="Tempos Aleatórios" style={{marginBottom: 0}} {...formItemLayout}>
+          {getFieldDecorator('tempos_aleatorios', {
+          })(
+            <Checkbox defaultChecked />,
           )}
         </Form.Item>
         <Form.Item label="Tempo Simulação: " style={{marginBottom: 0}} {...formItemLayout}>
